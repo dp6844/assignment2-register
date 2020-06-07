@@ -1,6 +1,9 @@
 const express = require('express');
 const mysql = require('mysql2');
 const app = express();
+let cors = require('cors')
+
+app.use(cors())
 app.use(express.json());
 
 const bodyParser = require('body-parser');
@@ -25,10 +28,11 @@ db.connect((err) => {
 
 const jsonParser = bodyParser.json()
 app.post('/api/register', jsonParser, (req, res) => {
-    let name = req.body.name;
-    let email = req.body.email;
-    let password = req.body.password;
-    let topic = req.body.topic;
+    let name = req.body.newValues.name;
+    let email = req.body.newValues.email;
+    let password = req.body.newValues.password;
+    let topic = req.body.newValues.topic;
+    console.log(req.body.newValues);
     let sqlSelect = 'SELECT * FROM user_details WHERE email ="' +  email + '";';
     let sql = 'INSERT INTO user_details values( "' + name + '", "' + email + '", "' + password +'", "' + topic + '");';
     console.log(sqlSelect);
